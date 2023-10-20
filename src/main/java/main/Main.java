@@ -32,6 +32,7 @@ public class Main {
                         processor = new Processor(projectSourcePath);
                         parserAST = new ParserAST(projectSourcePath);
                         couplageClass= new Couplage(projectSourcePath);
+
                     } catch (Exception e) {
                         System.out.println("Erreur : le chemin du projet est incorrect. Veuillez réessayer.");
                         projectSourcePath = null; // Réinitialise le chemin pour réessayer.
@@ -42,7 +43,7 @@ public class Main {
 
         while (true) {
             System.out.println("-----------------------------------------------------------------------------------");
-            System.out.println("***		BIENVENUE dans application de l'analyse statique d'un programme		***");
+            System.out.println("***		BIENVENUE dans application de Compréhension des programmes		***");
             System.out.println("-----------------------------------------------------------------------------------");
             System.out.println("Pour calculez une métrique de couplage entre deux classes A et B : tapez 1");
             System.out.println("Pour générez un graphe de couplage pondéré entre les classes de application : tapez 2");
@@ -54,13 +55,14 @@ public class Main {
                 case "1": {
                     Couplage.myResultExercice1();
                     System.out.println(" ");
-
                     System.out.println("Pour générez un graphe de couplage pondéré entre les classes de application : tapez 5");
                     System.out.println("Pour quitter : tapez 0 ");
                     choice = scanner.nextLine();
                     switch (choice) {
                         case "5": {
                             System.out.println(processor.getGraph());
+                            processor.saveGraph();
+                            processor.saveGraphAsPNG();
                             System.out.println(" ");
                             break;
                         }
@@ -80,14 +82,9 @@ public class Main {
                 case "2": {
                     System.out.println("Le graphe d'appels est :");
                     System.out.println(processor.getGraph());
-                    //Couplage.resultExercice2();
                     break;
                 }
-                case "3": {
-                    System.out.println("Le graphe d'appels est :");
 
-                    break;
-                }
                 case "0": {
                     System.out.println("Au revoir ! ");
                     scanner.close();

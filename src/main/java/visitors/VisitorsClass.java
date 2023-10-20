@@ -16,6 +16,7 @@ public class VisitorsClass extends ASTVisitor {
         private List<SuperMethodInvocation> superMethodsInvocation = new ArrayList<>();
         private ArrayList<Method> methodsHavingReferences = new ArrayList<Method>();
         private List<String> classesName = new ArrayList<>();
+        private static ArrayList<Method> methodsHavingReferencesBetweenAB = new ArrayList<Method>();
 
 
         // METHODES :
@@ -46,6 +47,38 @@ public class VisitorsClass extends ASTVisitor {
             } return methods;
         }
 
+        // recuperation des methodes qui existe entre les deux classes de la methode
+        public static void getMethodInvocationBetweenClasses(String methodA, String methodB,List<String> a , List<String> b ){
+            ArrayList<String> referencesA = new ArrayList<>();
+            ArrayList<String> referencesB = new ArrayList<>();
+            VisitorsClass visitorClass = new VisitorsClass();
+            visitorClass.setCu(visitorClass.cu);
+
+            // cette boucle recupere les noms classes et non pas les methodes de chaque class
+            for(String classa : a) {
+                for (String classb : b) {
+                    String methodNameA= methodA.toString();
+                    String methodNameB= methodB.toString();
+                    if(classa.equals(classb)){
+
+                        if(!visitorClass.methodContainedInCollection(classa,methodsHavingReferencesBetweenAB )){
+                            referencesA.add(classa);
+                            methodsHavingReferencesBetweenAB.add(new Method(methodNameA, referencesA));
+
+                        }
+                        if(!visitorClass.methodContainedInCollection(classb,methodsHavingReferencesBetweenAB )){
+                            referencesB.add(classb);
+                            methodsHavingReferencesBetweenAB.add(new Method(methodNameB, referencesB));
+                            System.out.println("2  " +methodsHavingReferencesBetweenAB);
+                        }
+                    }
+                }
+            }
+
+            System.out.println(methodsHavingReferencesBetweenAB);
+        }
+
+        // cette methode recupere les methodes d'invocation de la methode donner en paramettre
         public ArrayList<String> methodInvocationsOfMethodName(MethodDeclaration method) {
             ArrayList<String> references = new ArrayList<>();
             VisitorsClass visitorClass = new VisitorsClass();
@@ -63,7 +96,6 @@ public class VisitorsClass extends ASTVisitor {
                     methodInvocations.add(reference);
                 }
             }
-
             return methodInvocations;
         }
 
@@ -120,11 +152,15 @@ public class VisitorsClass extends ASTVisitor {
             return super.visit(node);
         }
 
+
+        // on recupere les methodes qui sont en relation entre les deux classes uniquement ça !
         public String getGraph() {
             StringBuilder res = new StringBuilder("");
-            for (Method method : methodsHavingReferences) {
+            for (Method method : methodsHavingReferencesBetweenAB) {
+                System.out.println("--------- coucou je suis dans les methodes -------------  "+method);
                 res.append(method);
             }
+            System.out.println("================================   "+res);
             if (res.toString().equals("")) {
                 res.append("Il n'y a aucun appel de methodes !");
             }
@@ -133,7 +169,7 @@ public class VisitorsClass extends ASTVisitor {
 
         public String getGraphAsDot() {
             StringBuilder res = new StringBuilder("digraph G {\n");
-            for (Method method : methodsHavingReferences) {
+            for (Method method : methodsHavingReferencesBetweenAB) {
                 res.append(method.getMethodWithCallsAndEntriesLinks());
             }
             res.append("\n}");

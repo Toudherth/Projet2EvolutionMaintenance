@@ -6,6 +6,7 @@ import parse.ParserAST;
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 import java.util.Scanner;
 
@@ -88,12 +89,19 @@ public class Couplage {
             }
         }
 
-        System.out.println();
+
+
+
 
         // Reste du traitement sur le couplage :
         if (classAExists && classBExists && methodeAExists && methodeBExists) {
             methodsClassA = processor.recuperListMethodeInvocation(classA, methodeA);
             methodsClassB = processor.recuperListMethodeInvocation(classB, methodeB);
+
+            System.out.println(" àààààààààààààààààààààààààààààààààààààààààààà  ");
+            processor.getMethodeClass(methodeA,methodeB, methodsClassA, methodsClassB);
+
+
 
             int nbMethodAB = processor.getNbMethodIncludInAB(methodsClassA, methodsClassB);
             int nbMethodAll = processor.calculAllMethods(methodsClassA, methodsClassB);

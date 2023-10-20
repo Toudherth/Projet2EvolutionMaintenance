@@ -78,15 +78,8 @@ public class Processor {
                 }
             }
         }
-        System.out.println(" je suis dans la liste d'invocation de methode en commun ------------------ "+allMethodEncludInAB);
         return allMethodEncludInAB;
     }
-
-
-    // get Methods between class A and class B
-    // ce que je veuc faire cest de recuperer la liste des methodes et les afficher pour realiser le graphe d'appelle de methode :
-
-
 
     // The method for Couplage between A and B
     public  static  float Couplage(int a, int b){

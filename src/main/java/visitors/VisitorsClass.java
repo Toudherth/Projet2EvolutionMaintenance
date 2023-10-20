@@ -60,16 +60,13 @@ public class VisitorsClass extends ASTVisitor {
                     String methodNameA= methodA.toString();
                     String methodNameB= methodB.toString();
                     if(classa.equals(classb)){
-
                         if(!visitorClass.methodContainedInCollection(classa,methodsHavingReferencesBetweenAB )){
                             referencesA.add(classa);
                             methodsHavingReferencesBetweenAB.add(new Method(methodNameA, referencesA));
-
                         }
                         if(!visitorClass.methodContainedInCollection(classb,methodsHavingReferencesBetweenAB )){
                             referencesB.add(classb);
                             methodsHavingReferencesBetweenAB.add(new Method(methodNameB, referencesB));
-                            System.out.println("2  " +methodsHavingReferencesBetweenAB);
                         }
                     }
                 }
@@ -157,10 +154,8 @@ public class VisitorsClass extends ASTVisitor {
         public String getGraph() {
             StringBuilder res = new StringBuilder("");
             for (Method method : methodsHavingReferencesBetweenAB) {
-                System.out.println("--------- coucou je suis dans les methodes -------------  "+method);
                 res.append(method);
             }
-            System.out.println("================================   "+res);
             if (res.toString().equals("")) {
                 res.append("Il n'y a aucun appel de methodes !");
             }

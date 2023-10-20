@@ -89,22 +89,16 @@ public class Couplage {
             }
         }
 
-
-
-
-
         // Reste du traitement sur le couplage :
         if (classAExists && classBExists && methodeAExists && methodeBExists) {
             methodsClassA = processor.recuperListMethodeInvocation(classA, methodeA);
             methodsClassB = processor.recuperListMethodeInvocation(classB, methodeB);
-
-            System.out.println(" àààààààààààààààààààààààààààààààààààààààààààà  ");
+            // get method invocation between classe A and B for call graph
+            System.out.println("Les methodes d'invocations qui sont en realtion entre la Classe A et la Classe B :");
             processor.getMethodeClass(methodeA,methodeB, methodsClassA, methodsClassB);
-
-
-
             int nbMethodAB = processor.getNbMethodIncludInAB(methodsClassA, methodsClassB);
             int nbMethodAll = processor.calculAllMethods(methodsClassA, methodsClassB);
+            // this for calcul de couplage
             float couplageAB = processor.Couplage(nbMethodAB, nbMethodAll);
             System.out.println("La métrique de couplage entre deux classes " + classA + " et " + classB + " est de : " + couplageAB);
         }

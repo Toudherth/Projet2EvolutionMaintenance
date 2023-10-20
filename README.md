@@ -10,3 +10,8 @@ de chaque methode et les methode d'invocation en commun entre les deux methodes 
 
 Couplage(A,B) = nbr relation betwenn A and B / nbr total relations AB.
 
+le programme vous renvoie un autre choix 5 qui vous permet de recuperer le graphe d'appel, et ce graphe d'appel sera renvoyer dans la console ainsi que une image png qu'on trouve dans le projet actuel.
+
+# choix 2
+
+

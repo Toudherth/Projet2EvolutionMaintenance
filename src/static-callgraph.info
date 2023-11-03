@@ -1,0 +1,311 @@
+Static Call Graph
+Methods: 168.
+Invocations: 290.
+visitors.VisitorsClass::methodInvocationsOfMethodName:
+	---> java.util.ArrayList<visitors.Method>::add (1 time(s))
+	---> java.util.ArrayList<java.lang.String>::add (1 time(s))
+	---> visitors.VisitorsClass::setCu (1 time(s))
+	---> visitors.VisitorsClass::methodContainedInCollection (1 time(s))
+	---> visitors.MethodDeclaration::accept (1 time(s))
+	---> visitors.VisitorsClass::getMethodsCalls (1 time(s))
+	---> visitors.MethodDeclaration::getName (1 time(s))
+	---> method.getName()::toString (1 time(s))
+	---> java.lang.String::equals (1 time(s))
+
+visitors.VisitorsClass::getMethodsCalls:
+	---> java.util.ArrayList<java.lang.String>::add (1 time(s))
+	---> methodsInvocation.getName()::toString (1 time(s))
+	---> visitors.MethodInvocation::getName (1 time(s))
+	---> java.util.ArrayList<java.lang.String>::contains (1 time(s))
+
+parse.ParserAST::getCompilationUnit:
+	---> parse.ASTParser::setCompilerOptions (1 time(s))
+	---> JavaCore::getOptions (1 time(s))
+	---> ASTParser::newParser (1 time(s))
+	---> parse.ASTParser::setBindingsRecovery (1 time(s))
+	---> parse.ASTParser::setUnitName (1 time(s))
+	---> parse.ASTParser::setEnvironment (1 time(s))
+	---> parse.ASTParser::createAST (1 time(s))
+	---> parse.ASTParser::setSource (1 time(s))
+	---> parse.ASTParser::setResolveBindings (1 time(s))
+	---> parse.ASTParser::setKind (1 time(s))
+
+exo1.Processor::AffichagesClass:
+	---> exo1.Processor::display (1 time(s))
+	---> java.util.List<java.lang.String>::add (1 time(s))
+	---> java.util.List<java.lang.String>::contains (1 time(s))
+
+visitors.VisitorsClass::visit:
+	---> visitors.MethodDeclaration::isConstructor (1 time(s))
+	---> java.util.List<visitors.SuperMethodInvocation>::add (1 time(s))
+	---> java.util.List<visitors.MethodDeclaration>::add (1 time(s))
+	---> visit (4 time(s))
+	---> java.util.List<visitors.TypeDeclaration>::add (1 time(s))
+	---> java.util.List<visitors.MethodInvocation>::add (1 time(s))
+
+visitors.VisitorsClass::getClassNamesDeclaration:
+	---> visitors.VisitorsClass::getClassDeclarations (1 time(s))
+	---> java.util.List<visitors.TypeDeclaration>::add (1 time(s))
+
+visitors.VisitorsClass::getMethodInvocationBetweenClasses:
+	---> java.util.ArrayList<java.lang.String>::add (2 time(s))
+	---> java.util.ArrayList<visitors.Method>::add (2 time(s))
+	---> visitors.VisitorsClass::setCu (1 time(s))
+	---> visitors.VisitorsClass::methodContainedInCollection (2 time(s))
+	---> java.lang.String::toString (2 time(s))
+	---> java.lang.String::equals (1 time(s))
+	---> java.io.PrintStream::println (1 time(s))
+
+visitors.VisitorsClass::getMethodsInvocationClass:
+	---> td.getName()::toString (1 time(s))
+	---> visitors.VisitorsClass::getClassDeclarations (1 time(s))
+	---> td.getName().toString()::equals (1 time(s))
+	---> visitors.TypeDeclaration::getName (1 time(s))
+
+exo2.Cluster::displayDeclaration:
+	---> ParserAST::getCompilationUnit (1 time(s))
+	---> java.lang.String::toCharArray (1 time(s))
+	---> exo2.VisitorsClass::getClassNamesDeclaration (1 time(s))
+	---> exo2.VisitorsClass::setCu (1 time(s))
+	---> exo2.CompilationUnit::accept (1 time(s))
+	---> FileUtils::readFileToString (1 time(s))
+
+exo1.Processor::saveGraph:
+	---> exo1.VisitorsClass::getGraphAsDot (1 time(s))
+	---> java.io.PrintWriter::close (1 time(s))
+	---> java.io.IOException::printStackTrace (1 time(s))
+	---> java.io.PrintStream::println (1 time(s))
+	---> java.io.PrintWriter::println (1 time(s))
+	---> java.io.FileWriter::close (1 time(s))
+	---> java.io.BufferedWriter::close (1 time(s))
+
+exo1.Processor::saveGraphAsPNG:
+	---> Graphviz.fromGraph(g).width(700).render(Format.PNG)::toFile (2 time(s))
+	---> g.graphAttrs().add(Color.WHITE.gradient(Color.rgb("888888")).background().angle(90)).nodeAttrs().add(Color.WHITE.fill()).nodes()::forEach (1 time(s))
+	---> g.graphAttrs().add(Color.WHITE.gradient(Color.rgb("888888")).background().angle(90))::nodeAttrs (1 time(s))
+	---> node::add (1 time(s))
+	---> Color.WHITE::fill (1 time(s))
+	---> Color.WHITE::gradient (1 time(s))
+	---> Color::named (1 time(s))
+	---> Color::rgb (1 time(s))
+	---> exo1.MutableGraph::graphAttrs (1 time(s))
+	---> Color.WHITE.gradient(Color.rgb("888888"))::background (1 time(s))
+	---> exo1.Parser::read (1 time(s))
+	---> node::name (1 time(s))
+	---> exo1.VisitorsClass::getGraphAsDot (1 time(s))
+	---> Graphviz::fromGraph (2 time(s))
+	---> g.graphAttrs().add(Color.WHITE.gradient(Color.rgb("888888")).background().angle(90)).nodeAttrs()::add (1 time(s))
+	---> Color.WHITE.gradient(Color.rgb("888888")).background()::angle (1 time(s))
+	---> node.name()::toString (1 time(s))
+	---> Graphviz.fromGraph(g).width(700)::render (2 time(s))
+	---> Graphviz.fromGraph(g)::width (2 time(s))
+	---> Style::lineWidth (1 time(s))
+	---> g.graphAttrs().add(Color.WHITE.gradient(Color.rgb("888888")).background().angle(90)).nodeAttrs().add(Color.WHITE.fill())::nodes (1 time(s))
+	---> g.graphAttrs()::add (1 time(s))
+
+exo2.Cluster::getListInvocationClass:
+	---> exo2.TypeDeclaration::equals (1 time(s))
+	---> java.io.PrintStream::println (1 time(s))
+	---> exo2.VisitorsClass::methodInvocationsOfClassName (1 time(s))
+
+visitors.VisitorsClass::getClassName:
+	---> td.getName()::toString (1 time(s))
+	---> visitors.VisitorsClass::getClassDeclarations (1 time(s))
+	---> visitors.TypeDeclaration::getName (1 time(s))
+	---> java.util.List<visitors.TypeDeclaration>::add (1 time(s))
+
+visitors.VisitorsClass::methodContainedInCollection:
+	---> methodsWithReferences2.get(i)::getMethodName (1 time(s))
+	---> java.util.ArrayList<visitors.Method>::get (1 time(s))
+	---> java.util.ArrayList<visitors.Method>::size (1 time(s))
+	---> methodsWithReferences2.get(i).getMethodName()::equals (1 time(s))
+
+exo1.Couplage::Couplage:
+	---> exo1.ParserAST::listJavaFilesForFolder (1 time(s))
+
+parse.ParserAST::listJavaFilesForFolder:
+	---> java.util.ArrayList<java.io.File>::add (1 time(s))
+	---> java.io.File::listFiles (1 time(s))
+	---> parse.ParserAST::listJavaFilesForFolder (1 time(s))
+	---> java.io.File::getName (1 time(s))
+	---> java.lang.String::contains (1 time(s))
+	---> java.io.File::isDirectory (1 time(s))
+	---> java.util.ArrayList<java.io.File>::addAll (1 time(s))
+
+visitors.VisitorsClass::methodInvocationsOfClassName:
+	---> java.util.ArrayList<visitors.Method>::add (1 time(s))
+	---> java.util.ArrayList<java.lang.String>::add (1 time(s))
+	---> visitors.VisitorsClass::setCu (1 time(s))
+	---> visitors.VisitorsClass::methodContainedInCollection (1 time(s))
+	---> visitors.VisitorsClass::getMethodsCalls (1 time(s))
+	---> classdec.getName()::toString (1 time(s))
+	---> visitors.TypeDeclaration::accept (1 time(s))
+	---> java.lang.String::equals (1 time(s))
+	---> visitors.TypeDeclaration::getName (1 time(s))
+
+exo2.Cluster::getAllClasses:
+	---> exo2.Cluster::display (1 time(s))
+	---> java.lang.String::toString (1 time(s))
+	---> java.util.List<java.lang.String>::add (1 time(s))
+	---> java.util.List<java.lang.String>::contains (1 time(s))
+
+exo1.Processor::getNbMethodIncludInAB:
+	---> java.util.List<java.lang.String>::size (2 time(s))
+
+exo1.Couplage::myResultExercice1:
+	---> exo1.Processor::checkClasses (2 time(s))
+	---> exo1.Processor::Couplage (1 time(s))
+	---> exo1.Processor::getMethodDeclarationClass (4 time(s))
+	---> exo1.Processor::AffichagesClass (1 time(s))
+	---> exo1.Processor::getListInvocationClass (4 time(s))
+	---> java.util.Scanner::nextLine (2 time(s))
+	---> exo1.Processor::getListMethodDeclarationInvocation (4 time(s))
+	---> exo1.Processor::calculAllMethods (1 time(s))
+	---> exo1.Processor::getNbMethodIncludInAB (1 time(s))
+	---> java.io.PrintStream::println (12 time(s))
+	---> java.util.List<java.lang.String>::toArray (4 time(s))
+
+exo2.Cluster::calculNbrMethodInvocationOfClasses:
+	---> java.io.PrintStream::println (1 time(s))
+
+entity.Method::addMethodInvocation:
+	---> java.util.ArrayList<java.lang.String>::add (1 time(s))
+	---> entity.Method::getMethodName (1 time(s))
+	---> java.lang.String::toString (1 time(s))
+
+visitors.VisitorsClass::getClassDeclarationClass:
+	---> c.getName()::toString (1 time(s))
+	---> visitors.VisitorsClass::getClassDeclarations (1 time(s))
+	---> c.getName().toString()::contains (1 time(s))
+	---> java.util.List<java.lang.String>::add (1 time(s))
+	---> visitors.TypeDeclaration::getName (1 time(s))
+
+visitors.VisitorsClass::getClassNames:
+	---> td.getName()::toString (1 time(s))
+	---> visitors.VisitorsClass::getClassDeclarations (1 time(s))
+	---> java.util.List<java.lang.String>::add (1 time(s))
+	---> visitors.TypeDeclaration::getName (1 time(s))
+
+visitors.VisitorsClass::getGraphAsDot:
+	---> visitors.Method::getMethodWithCallsAndEntriesLinks (1 time(s))
+	---> java.lang.StringBuilder::append (2 time(s))
+	---> java.lang.StringBuilder::toString (1 time(s))
+
+exo2.ClassMain::main:
+	---> java.io.PrintStream::print (1 time(s))
+	---> exo2.Cluster::getListInvocationClass (1 time(s))
+	---> java.util.Map.Entry<java.lang.String,java.util.List<java.lang.String>>::getKey (1 time(s))
+	---> java.util.Map<java.lang.String,java.util.List<java.lang.String>>::put (1 time(s))
+	---> java.util.Map<java.lang.String,java.util.List<java.lang.String>>::entrySet (1 time(s))
+	---> exo2.TypeDeclaration::getName (1 time(s))
+	---> java.util.Scanner::nextLine (1 time(s))
+	---> nomClass.getName()::toString (1 time(s))
+	---> exo2.Cluster::getAllClassDeclaration (1 time(s))
+	---> java.util.Map.Entry<java.lang.String,java.util.List<java.lang.String>>::getValue (1 time(s))
+	---> java.io.PrintStream::println (7 time(s))
+
+exo1.Processor::checkMethod:
+	---> exo1.Processor::getMethodDeclarationClass (1 time(s))
+	---> java.lang.String::equals (1 time(s))
+
+exo1.Processor::getMethodDeclarationClass:
+	---> exo1.VisitorsClass::getMethodsDeclarationClass (1 time(s))
+	---> exo1.MethodDeclaration::getName (1 time(s))
+	---> java.util.List<java.lang.String>::add (1 time(s))
+	---> md.getName()::toString (1 time(s))
+
+exo1.Processor::getListInvocationClass:
+	---> exo1.VisitorsClass::getClassDeclarations (1 time(s))
+	---> java.lang.String::toString (1 time(s))
+	---> java.lang.String::equals (1 time(s))
+	---> nom.getName()::toString (1 time(s))
+	---> exo1.VisitorsClass::methodInvocationsOfClassName (1 time(s))
+	---> exo1.TypeDeclaration::getName (1 time(s))
+
+exo1.Processor::getNbListOfMethoClassAetB:
+	---> java.lang.String::toString (1 time(s))
+	---> java.lang.String::equals (1 time(s))
+	---> java.util.List<java.lang.String>::add (1 time(s))
+
+exo2.Cluster::display:
+	---> ParserAST::getCompilationUnit (1 time(s))
+	---> java.lang.String::toCharArray (1 time(s))
+	---> exo2.VisitorsClass::getClassNames (1 time(s))
+	---> exo2.VisitorsClass::setCu (1 time(s))
+	---> exo2.CompilationUnit::accept (1 time(s))
+	---> FileUtils::readFileToString (1 time(s))
+
+entity.Method::getMethodWithCallsAndEntriesLinks:
+	---> java.lang.StringBuilder::append (4 time(s))
+	---> java.lang.StringBuilder::toString (1 time(s))
+
+exo1.Processor::getListMethodDeclarationInvocation:
+	---> java.lang.String::toString (2 time(s))
+	---> java.lang.String::equals (1 time(s))
+	---> java.util.List<java.lang.String>::add (1 time(s))
+
+exo2.Cluster::getAllClassDeclaration:
+	---> java.util.List<exo2.TypeDeclaration>::contains (1 time(s))
+	---> java.util.List<exo2.TypeDeclaration>::add (1 time(s))
+	---> exo2.Cluster::displayDeclaration (1 time(s))
+
+exo1.Processor::Processor:
+	---> exo1.ParserAST::listJavaFilesForFolder (1 time(s))
+
+exo1.Processor::calculAllMethods:
+	---> exo1.Processor::getNbMethodeBetweenAllAetB (1 time(s))
+	---> java.util.List<java.lang.String>::size (2 time(s))
+	---> exo1.Processor::getNbMethodeBetweenAetB (1 time(s))
+
+main.Main::main:
+	---> java.io.PrintStream::print (1 time(s))
+	---> Couplage::myResultExercice1 (1 time(s))
+	---> main.Processor::saveGraphAsPNG (1 time(s))
+	---> main.Processor::getGraph (2 time(s))
+	---> java.util.Scanner::close (2 time(s))
+	---> java.util.Scanner::nextLine (3 time(s))
+	---> java.lang.System::exit (2 time(s))
+	---> java.io.PrintStream::println (20 time(s))
+	---> main.Processor::saveGraph (1 time(s))
+
+exo2.Cluster::Cluster:
+	---> exo2.ParserAST::listJavaFilesForFolder (1 time(s))
+
+visitors.VisitorsClass::getMethodsDeclarationClass:
+	---> c.getName()::toString (1 time(s))
+	---> visitors.VisitorsClass::getClassDeclarations (1 time(s))
+	---> java.util.List<visitors.MethodDeclaration>::add (1 time(s))
+	---> c.getName().toString()::contains (1 time(s))
+	---> visitors.TypeDeclaration::getMethods (1 time(s))
+	---> visitors.TypeDeclaration::getName (1 time(s))
+
+exo1.Processor::checkClasses:
+	---> exo1.Processor::display (1 time(s))
+	---> java.lang.String::equals (1 time(s))
+
+exo1.Processor::getNbMethodeBetweenAllAetB:
+	---> java.util.List<java.lang.String>::add (1 time(s))
+
+exo1.Processor::getMethodeClass:
+	---> exo1.VisitorsClass::getMethodInvocationBetweenClasses (1 time(s))
+
+visitors.VisitorsClass::getGraph:
+	---> java.lang.StringBuilder::append (2 time(s))
+	---> java.lang.String::equals (1 time(s))
+	---> java.lang.StringBuilder::toString (2 time(s))
+
+exo1.Processor::display:
+	---> ParserAST::getCompilationUnit (1 time(s))
+	---> java.lang.String::toCharArray (1 time(s))
+	---> exo1.VisitorsClass::getClassNames (1 time(s))
+	---> exo1.VisitorsClass::setCu (1 time(s))
+	---> exo1.CompilationUnit::accept (1 time(s))
+	---> FileUtils::readFileToString (1 time(s))
+
+exo1.Processor::getGraph:
+	---> exo1.VisitorsClass::getGraph (1 time(s))
+
+exo1.Processor::getNbMethodeBetweenAetB:
+	---> java.util.List<java.lang.String>::add (1 time(s))
+
+

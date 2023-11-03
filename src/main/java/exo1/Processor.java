@@ -1,5 +1,6 @@
 package exo1;
 
+import entity.Method;
 import guru.nidi.graphviz.attribute.Color;
 import guru.nidi.graphviz.attribute.Style;
 import guru.nidi.graphviz.engine.Format;
@@ -7,14 +8,12 @@ import guru.nidi.graphviz.engine.Graphviz;
 import guru.nidi.graphviz.model.MutableGraph;
 import guru.nidi.graphviz.parse.Parser;
 import org.apache.commons.io.FileUtils;
-import org.eclipse.jdt.core.dom.CompilationUnit;
-import org.eclipse.jdt.core.dom.MethodDeclaration;
+import org.eclipse.jdt.core.dom.*;
 import parse.ParserAST;
 import visitors.VisitorsClass;
 
 import java.io.*;
-import java.util.ArrayList;
-import java.util.List;
+import java.util.*;
 
 public class Processor {
     // VARIABLES : -----------------------------------------------
@@ -26,9 +25,9 @@ public class Processor {
     private static List<String> classesName;
     public static float couplage=0;
 
-    // METHODES : -----------------------------------------
 
-    // for initialisation of uri :
+
+    /** Constructor & Initialisation uri  for chemin d'acces : */
     public Processor(String projectSourcePath) {
         this.projectSourcePath = projectSourcePath;
         this.folder = new File(projectSourcePath);
@@ -36,79 +35,89 @@ public class Processor {
     }
 
 
-    //La liste des methodes entre la classe A et B
-    public static List<String>  getNbMethodeBetweenAetB(List<String> a , List<String> b ){
+    /** METHODES :
+    ============================================ */
 
-        // get liste of relations between A and B
-        List<String> allMethodBetweenAB = new ArrayList<>();
+
+
+    /**Get all method for class name  */
+    static List<String> allMethodBetweenAB = new ArrayList<>();
+
+    /** Get mla liste des methodes de la classe A a cause d'initialisation de la variable pour ne pas avoir des problemes de repetition */
+    public static List<String>  getNbMethodeBetweenAllAetB(List<String> a  ){
         for(String classa : a){
-            for(String classb: b){
-                if(! allMethodBetweenAB.contains(classa)){
-                   allMethodBetweenAB.add(classa);
-                }
-                if(! allMethodBetweenAB.contains(classb)){
-                    allMethodBetweenAB.add(classb);
-                }
-            }
+            allMethodBetweenAB.add(classa);
         }
-    return allMethodBetweenAB;
+        return allMethodBetweenAB;
 
     }
-
-    public static int calculAllMethods(List<String> a , List<String> b ){
-        return getNbMethodeBetweenAetB(a, b).size();
+    /** Get mla liste des methodes de la classe B */
+    static List<String> allMethodBetweenAllAB = new ArrayList<>();
+    public static List<String>  getNbMethodeBetweenAllBetA(List<String> a  ){
+        for(String classa : a){
+            allMethodBetweenAllAB.add(classa);
+        }
+        return allMethodBetweenAllAB;
     }
 
-    // get nbr method includ in A & B
+    /** Calculer le nombre de methode */
+    public static int calculAllMethods(List<String> a,List<String> b  ){
+        /** clacule le nombre de methode pour les classes A et les classes B puis il fait la somme */
+        int clsa = getNbMethodeBetweenAllAetB(a).size();
+        int clsb= getNbMethodeBetweenAllBetA(b).size();
+        int s= clsa+clsb;
+        return s;
+    }
+
+    /** recuperer le nombre de method between A & B */
     public static int getNbMethodIncludInAB(List<String> a , List<String> b ){
-        return getNbListOfMethoClassAetB(a, b).size();
+        int clsA= a.size();
+        int clsB= b.size();
+        int s= clsA+clsB;
+        return s;
     }
 
-    public static  void getMethodeClass(String methodA, String methodB,List<String> a , List<String> b ){
-        visitorsClass.getMethodInvocationBetweenClasses(methodA, methodB, a, b);
-    }
-
-    // method includ in A & B
-    public static List<String> getNbListOfMethoClassAetB(List<String> a , List<String> b ){
-        List<String> allMethodEncludInAB = new ArrayList<>();
-        for(String classa : a){
-            for(String classb: b){
-                if(classa.equals(classb)){
-                    allMethodEncludInAB.add(classa.toString());
-                }
-            }
-        }
-        return allMethodEncludInAB;
-    }
-
-    // The method for Couplage between A and B
+    /** la methode de calcul de Couplage between A and B**/
     public  static  float Couplage(int a, int b){
          couplage = (float) a / b;
         return couplage;
     }
 
-    // recuperer les methodes d'invocations d'une methode
-    public static List<String> recuperListMethodeInvocation(String nameClass, String nameMethod){
-        List<String>  listeMethodeInvocationPerMethod= new ArrayList<>();
-        List<MethodDeclaration>  methodsClass = visitorsClass.getMethodsDeclarationClass(nameClass);
-        MethodDeclaration nomMethodDeclaration= methodsClass.get(0);
-        System.out.println(" ");
-        String nommethodeDec = nomMethodDeclaration.getName().toString();
-        if(nommethodeDec.equals(nameMethod)){
-            listeMethodeInvocationPerMethod= visitorsClass.methodInvocationsOfMethodName(nomMethodDeclaration);
-            System.out.println(listeMethodeInvocationPerMethod);
-        }
-        return listeMethodeInvocationPerMethod;
-
+    /** verification des classes qui sont en relation entre les deux  classes A & B */
+    public static  List<String> getListMethodDeclarationInvocation(List<String> methodclassA, List<String> methodclassB){
+        List<String> listeMethodeDeclarationInvocation = new ArrayList<>();
+        for(String sd: methodclassA){
+            for(String si: methodclassB){
+                if(sd.toString().equals(si.toString())){
+                    listeMethodeDeclarationInvocation.add(sd);
+                 }
+        }   }
+        return listeMethodeDeclarationInvocation;
     }
 
-    // recuperation des methodes de declaration par classe :
+    /** Get methode invocation of classes  **/
+    public static List<String>  getListInvocationClass(String nameClass) {
+        List<String> listeMethodeInvocationPerClass = new ArrayList<>();
+        for (TypeDeclaration nom : visitorsClass.getClassDeclarations()) {
+            String nameC= nom.getName().toString();
+            if(nameC.equals(nameClass.toString())){
+                //System.out.println(nameC);
+                listeMethodeInvocationPerClass= visitorsClass.methodInvocationsOfClassName(nom);
+                if(listeMethodeInvocationPerClass.size()!=0){
+                    return  listeMethodeInvocationPerClass;
+                }
+            }
+        }
+        return listeMethodeInvocationPerClass;
+    }
+
+
+    /** Get a methodes declaration of classes :*/
     public static  List<String> getMethodDeclarationClass(String nameClass){
         List<String> methodsDeclaration= new ArrayList<>();
         List<MethodDeclaration>  methodsClass = visitorsClass.getMethodsDeclarationClass(nameClass);
         for(MethodDeclaration md: methodsClass){
             methodsDeclaration.add(md.getName().toString());
-
         }
         return methodsDeclaration;
     }
@@ -134,15 +143,6 @@ public class Processor {
         return false;
     }
 
-    // Appel de boucle pour verifier si la class donner en param existe dans la liste
-    public static boolean checkMethod(String nomMethod, String nameClass) throws IOException {
-        for (String md : getMethodDeclarationClass(nameClass)){
-            if(md.equals(nomMethod)){
-                return true;
-            }
-        }
-       return false;
-    }
 
 
     // cette methode recupere les methodes
@@ -156,6 +156,7 @@ public class Processor {
             }
         return classesName;
     }
+
 
 
     // pour les graphes
@@ -187,6 +188,13 @@ public class Processor {
                 .add(Color.WHITE.fill()).nodes()
                 .forEach(node -> node.add(Color.named(node.name().toString()), Style.lineWidth(4), Style.FILLED));
         Graphviz.fromGraph(g).width(700).render(Format.PNG).toFile(new File("graph-2.png"));
+
+    }
+
+    // recuperation de la liste des methodes d'invocation et de declaration for classes
+    public static List<Method> getMethodDeclarationInvocationBetweenClasses(String methodA, String methodB, List<String> a , List<String> b){
+      return  visitorsClass.getMethodDeclarationInvocationBetweenClasses(methodA, methodB,a,b);
+
 
     }
 

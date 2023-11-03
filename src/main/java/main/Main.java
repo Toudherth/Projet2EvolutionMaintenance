@@ -2,6 +2,7 @@ package main;
 
 import exo1.Couplage;
 import exo1.Processor;
+import exo2.Clustering;
 import parse.ParserAST;
 import java.io.IOException;
 import java.util.ArrayList;
@@ -11,6 +12,7 @@ import java.util.Scanner;
 public class Main {
     // VARIABLES :
     public static Processor processor;
+    public static Clustering clustering;
     public static List<String> getClasses= new ArrayList<>();
     private static List<String> methodsClassA= new ArrayList<>();
     private static List<String> methodsClassB= new ArrayList<>();
@@ -30,6 +32,7 @@ public class Main {
 
                     try {
                         processor = new Processor(projectSourcePath);
+                        clustering= new Clustering(projectSourcePath);
                         parserAST = new ParserAST(projectSourcePath);
                         couplageClass= new Couplage(projectSourcePath);
 
@@ -45,10 +48,9 @@ public class Main {
             System.out.println("-----------------------------------------------------------------------------------");
             System.out.println("***		BIENVENUE dans application de Compréhension des programmes		***");
             System.out.println("-----------------------------------------------------------------------------------");
-            System.out.println("Pour calculez une métrique de couplage entre deux classes A et B : tapez 1");
-            System.out.println("Pour générez un graphe de couplage pondéré entre les classes de application : tapez 2");
-            System.out.println("Pour l'exercice 2 : tapez 3");
-            System.out.println("Pour l'exercice 3 : tapez 4");
+            System.out.println("1 - Calculez une métrique de couplage entre deux classes A et B ");
+            System.out.println("2 - Générer le regroupement hiérarchique des classes. ");
+            System.out.println("3 - Pour l'exercice 3 : tapez 4");
             System.out.println("Pour quitter tapez 0");
             choice = scanner.nextLine();
             switch (choice) {
@@ -80,10 +82,15 @@ public class Main {
                 }
 
                 case "2": {
-                    System.out.println("Le graphe d'appels est :");
-                    System.out.println(processor.getGraph());
+                    System.out.println("Voici la liste des classes de projet : ");
+                    getClasses = clustering.AffichagesClass();
+                    System.out.println(getClasses);
+
+                    clustering.BuildClusters();
                     break;
                 }
+
+
 
                 case "0": {
                     System.out.println("Au revoir ! ");
@@ -97,14 +104,7 @@ public class Main {
             }
 
         }
-
-
-
-
-
-
-
-            }
+    }
 
 
 }

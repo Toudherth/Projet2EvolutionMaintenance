@@ -1,3 +1,3 @@
 digraph G {
-main->println Couplage->println 
+Processor->calculateGraph Processor->getAllMethods Processor->setCu Processor->getGraph VisitorsClass->calculateGraph VisitorsClass->getAllMethods VisitorsClass->setCu VisitorsClass->getGraph 
 }

@@ -67,7 +67,7 @@ public class Clustering {
     }
 
     // TODO: une methode merge qui permet de fusionner entre deux cluster
-    public static void BuildClusters(){
+    public static void HierarchicalClustering(){
         System.out.println("Démmarage du processus de Clustering ...........");
         System.out.println("Clustering en cours ...........");
         int k=0;

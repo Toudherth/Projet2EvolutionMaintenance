@@ -85,8 +85,7 @@ public class Main {
                     System.out.println("Voici la liste des classes de projet : ");
                     getClasses = clustering.AffichagesClass();
                     System.out.println(getClasses);
-
-                    clustering.BuildClusters();
+                    clustering.HierarchicalClustering();
                     break;
                 }
 

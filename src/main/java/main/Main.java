@@ -43,6 +43,7 @@ public class Main {
                         parserAST = new ParserAST(projectSourcePath);
                         couplageClass= new Couplage(projectSourcePath);
 
+
                     } catch (Exception e) {
                         System.out.println("Erreur : le chemin du projet est incorrect. Veuillez réessayer.");
                         projectSourcePath = null; // Réinitialise le chemin pour réessayer.

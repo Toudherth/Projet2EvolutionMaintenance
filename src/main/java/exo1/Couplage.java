@@ -85,15 +85,13 @@ public class Couplage {
                     listeMethodstotalA= processor.getListMethodDeclarationInvocation(methodDeclarationAllA, methodInvocationAllB);
                     listeMethodstotalB = processor.getListMethodDeclarationInvocation(methodDeclarationAllB, methodInvocationAllA);
 
-
-                    /*System.out.println("Méthodes de classe " + clsA + ": " + listeMethodstotalA);
-                    System.out.println("Méthodes de classe " + clsB + ": " + listeMethodstotalB);
-                    */
-
                     /** clacul de nombre de methodes dans tous le programme */
                     nbMethodAll = processor.calculAllMethods(listeMethodstotalA, listeMethodstotalB);
                 }
             }
+
+            /** cette methode permet de recuperer la liste des methodes enrelation entre la classe A et B pour realiser le graphe d'appel */
+            processor.getMethodDeclarationInvocationBetweenClasses(classA, classB,listeMethodsA, listeMethodsB);
 
 
             int nbMethodAB = processor.getNbMethodIncludInAB(listeMethodsA, listeMethodsB);

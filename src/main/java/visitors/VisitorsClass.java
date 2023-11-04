@@ -41,13 +41,6 @@ public class VisitorsClass extends ASTVisitor {
         return classesName;
     }
 
-    /** recuperer la liste des classes de programme avec typeDeclaration  */
-    public Set<TypeDeclaration> getClassNamesDeclaration() {
-        for(TypeDeclaration td: getClassDeclarations()){
-            classesnomdeclaration.add(td);
-        }
-        return classesnomdeclaration;
-    }
 
     /** Method declaration  de class */
     public   List<MethodDeclaration> getMethodsDeclarationClass(String nomClass)  {
@@ -60,6 +53,30 @@ public class VisitorsClass extends ASTVisitor {
                 break;
             }
         } return methods;
+    }
+
+    /** recuperation des methodes d'invocations pour chaque classe de programme*/
+    public ArrayList<String> methodInvocationsOfClassName(TypeDeclaration classdec) {
+        ArrayList<String> references = new ArrayList<>();
+        VisitorsClass visitorClass = new VisitorsClass();
+        methodsHavingReferences= new ArrayList<>();
+
+        visitorClass.setCu(cu);
+        classdec.accept(visitorClass);
+        String className = classdec.getName().toString();
+
+        if (!methodContainedInCollection(className, methodsHavingReferences)) {
+            references = visitorClass.getMethodsCalls();
+            methodsHavingReferences.add(new Method(className, references));
+        }
+        // Récupérez uniquement les méthodes d'invocation sans le nom de méthode
+        ArrayList<String> methodInvocations = new ArrayList<>();
+        for (String reference : references) {
+            if (!reference.equals(className)) {
+                methodInvocations.add(reference);
+            }
+        }
+        return methodInvocations;
     }
 
     // je peux utiliser cette methode pour stocker les methodes d'invocations et de declaration between les deux classes pour la realisation de graphe
@@ -117,32 +134,7 @@ public class VisitorsClass extends ASTVisitor {
         return false;
     }
 
-
-    /** recuperation des methodes d'invocations pour chaque classe de programme*/
-    public ArrayList<String> methodInvocationsOfClassName(TypeDeclaration classdec) {
-        ArrayList<String> references = new ArrayList<>();
-        VisitorsClass visitorClass = new VisitorsClass();
-        methodsHavingReferences= new ArrayList<>();
-
-        visitorClass.setCu(cu);
-        classdec.accept(visitorClass);
-        String className = classdec.getName().toString();
-
-        if (!methodContainedInCollection(className, methodsHavingReferences)) {
-            references = visitorClass.getMethodsCalls();
-            methodsHavingReferences.add(new Method(className, references));
-        }
-        // Récupérez uniquement les méthodes d'invocation sans le nom de méthode
-        ArrayList<String> methodInvocations = new ArrayList<>();
-        for (String reference : references) {
-            if (!reference.equals(className)) {
-                methodInvocations.add(reference);
-            }
-        }
-        return methodInvocations;
-    }
-
-    /* pour recuperer les methodes d'invocation*/
+    /** pour recuperer les methodes d'invocation*/
 
     private ArrayList<String> getMethodsCalls() {
         ArrayList<String> res = new ArrayList<>();
@@ -155,8 +147,6 @@ public class VisitorsClass extends ASTVisitor {
         }
         return res;
     }
-
-
 
     /** ------------------- Les methodes des visitors  et AST ------------------- */
     @Override

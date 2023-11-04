@@ -1,5 +1,6 @@
 package exo2;
 
+import entity.Module;
 import org.apache.commons.io.FileUtils;
 import org.eclipse.jdt.core.dom.CompilationUnit;
 import org.eclipse.jdt.core.dom.MethodDeclaration;
@@ -22,6 +23,7 @@ public class Clustering {
     private static List<String> classesName;
     private static List<String> clusters= new ArrayList<>();
 
+
     /** METHODES */
 
     // for initialisation of uri :
@@ -31,19 +33,7 @@ public class Clustering {
         this.javaFiles = parse.listJavaFilesForFolder(this.folder);
     }
 
-
-
-
-
-    public Clustering() {
-        super();
-        // TODO Auto-generated constructor stub
-    }
-
-
     // TODO: Algorithme de clusturing
-
-    // TODO : Recuperation de l'ensemble des classes dans la liste cluster
 
     /** ce qui faut faire cest d'implementer cet algorithme */
     public static List<String>  AffichagesClass() throws IOException {
@@ -67,40 +57,36 @@ public class Clustering {
     }
 
     // TODO: une methode merge qui permet de fusionner entre deux cluster
-    public static void HierarchicalClustering(){
+    public void hierarchicalClustering() {
         System.out.println("Démmarage du processus de Clustering ...........");
         System.out.println("Clustering en cours ...........");
+        System.out.println();
         int k=0;
 
         while (clusters.size()>1 ) {
-        double bestMetric = -1.0;
-        String cluster1 = null;
-        String cluster2 = null;
+            double bestMetric = -1.0;
+            String cluster1 = null;
+            String cluster2 = null;
 
+            for (int i = 0; i < clusters.size(); i++) {
+                for (int j = i + 1; j < clusters.size(); j++) {
+                    String c1 = clusters.get(i);
+                    String c2 = clusters.get(j);
+                    // Calculez la métrique de couplage entre c1 et c2
+                    double metric = calculateCouplingMetric(c1, c2);
 
-        for (int i = 0; i < clusters.size(); i++) {
-            for (int j = i + 1; j < clusters.size(); j++) {
-                String c1 = clusters.get(i);
-                String c2 = clusters.get(j);
-
-                // Calculez la métrique de couplage entre c1 et c2
-                double metric = calculateCouplingMetric(c1, c2);
-
-                if (metric > bestMetric) {
-                    bestMetric = metric;
-                    cluster1 = c1;
-                    cluster2 = c2;
-                    mergeClusters(cluster1, cluster2,clusters);
-                }
-
+                    if (metric > bestMetric) {
+                        bestMetric = metric;
+                        cluster1 = c1;
+                        cluster2 = c2;
+                        mergeClusters(cluster1, cluster2,clusters);
+                    }
                 }
             }
             k++;
             System.out.println("Clusters "+ k +" actuels : " + clusters);
-
-
         }
-       }
+    }
 
     // il faut faire un traitement sur la best metric
     // TODO : La methode pour le merge entre deux clusters
@@ -116,7 +102,7 @@ public class Clustering {
 
     }
 
-    private static double calculateCouplingMetric(String classA, String classB) {
+    public static double calculateCouplingMetric(String classA, String classB) {
         // Obtenez la liste des méthodes de déclaration et d'invocation pour les classes A et B
         List<String> methodsDeclA = getMethodsDeclarationInCluster(classA);
         List<String> methodsDeclB = getMethodsDeclarationInCluster(classB);
@@ -143,10 +129,8 @@ public class Clustering {
         }
         // Calculez le nombre total de relations possibles entre toutes les classes
         int totalRelations = getTotalPossibleRelations();
-
         // Calculez la métrique de couplage
         double couplingMetric = (double) relationCount / totalRelations;
-
         return couplingMetric;
     }
 
@@ -161,17 +145,26 @@ public class Clustering {
                     List<String> methodsInvA = getMethodInvocationInCluster(classA);
                     List<String> methodsDeclB = getMethodsDeclarationInCluster(classB);
 
-                    totalRelations += methodsDeclA.size() * methodsInvB.size();
-                    totalRelations += methodsInvA.size() * methodsDeclB.size();
+                    for (String methodA : methodsDeclA) {
+                        for (String methodB : methodsInvB) {
+                            if (methodA.equals(methodB)) {
+                                totalRelations++;
+                            }
+                        }
+                    }
+
+                    for (String methodA : methodsInvA) {
+                        for (String methodB : methodsDeclB) {
+                            if (methodA.equals(methodB)) {
+                                totalRelations++;
+                            }
+                        }
+                    }
                 }
             }
         }
-
         return totalRelations;
     }
-
-
-
 
     /** pour recuperer les methodes de declaration ainsi que les methodes d'invocation de chaque cluster par class et les fusionner */
     private static List<String> getMethodsDeclarationInCluster(String cluster) {
@@ -204,18 +197,11 @@ public class Clustering {
                     }
                 }
             }
-
         }
-
         return methodsInvocationInCluster1;
     }
 
-
-
-
-
     /** Get a methodes declaration of classes :*/
-    // private static List<String> methodsDeclaration= new ArrayList<>();
     public static  List<String> getMethodDeclarationClass(String nameClass){
         List<String> methodsDeclaration= new ArrayList<>();
         List<MethodDeclaration>  methodsClass = visitorsClass.getMethodsDeclarationClass(nameClass);
@@ -229,7 +215,6 @@ public class Clustering {
     }
 
     /** Get methode invocation of classes  **/
-    //private static List<String> listeMethodeInvocationPerClass = new ArrayList<>();
     public static List<String>  getMethodInvocationClass(String nameClass) {
         List<String> listeMethodeInvocationPerClass = new ArrayList<>();
         for (TypeDeclaration nom : visitorsClass.getClassDeclarations()) {
@@ -243,29 +228,5 @@ public class Clustering {
         }
         return listeMethodeInvocationPerClass;
     }
-
-
-
-
-
-
-
-    // TODO : pour ajouter la class dans le cluster
-    public void addClasses(Set<String> classesToAdd) {
-        for (String classToAdd : classesToAdd) {
-            if (!this.getClasses().contains(classToAdd)) {
-                this.clusters.add(classToAdd);
-            }
-        }
-    }
-
-
-
-    // Getters && Setters
-
-    public List<String> getClasses() {
-        return clusters;
-    }
-
 
 }

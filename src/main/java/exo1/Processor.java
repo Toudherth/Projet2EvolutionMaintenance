@@ -90,7 +90,9 @@ public class Processor {
         for(String sd: methodclassA){
             for(String si: methodclassB){
                 if(sd.toString().equals(si.toString())){
-                    listeMethodeDeclarationInvocation.add(sd);
+                    if( ! listeMethodeDeclarationInvocation.contains(sd)){
+                        listeMethodeDeclarationInvocation.add(sd);
+                    }
                  }
         }   }
         return listeMethodeDeclarationInvocation;
@@ -167,7 +169,7 @@ public class Processor {
 
     public void saveGraph() {
         try {
-            FileWriter fw = new FileWriter("graph.dot", false);
+            FileWriter fw = new FileWriter("./graph.dot", false);
             BufferedWriter bw = new BufferedWriter(fw);
             PrintWriter out = new PrintWriter(bw);
             out.println(visitorsClass.getGraphAsDot());
@@ -195,8 +197,6 @@ public class Processor {
     // recuperation de la liste des methodes d'invocation et de declaration for classes
     public static List<Method> getMethodDeclarationInvocationBetweenClasses(String methodA, String methodB, List<String> a , List<String> b){
       return  visitorsClass.getMethodDeclarationInvocationBetweenClasses(methodA, methodB,a,b);
-
-
     }
 
 

@@ -39,26 +39,12 @@ public class SpoonProcessor {
 
     public static void myResultExerciceOfSpoon() throws IOException {
         Scanner scanner = new Scanner(System.in);
-
-        System.out.println("Spoonnn processor ");
         spoonParser = new SpoonParser(projectSourcePath);
 
-
         //TODO : Calculez une métrique avec Spoon de couplage entre deux classes A et B
-       // System.out.println("\u001B[1m 4 - Calculer la métrique de couplage entre deux classes A et B en utilisant Spoon: \u001B[0m");
         spoonCouplingMetric = new SpoonCouplingMetric(spoonParser.getModel());
-
-
         System.out.println("Voici la liste des classes de projet : ");
-        // get classes
         getClasses =spoonCouplingMetric.AffichagesClass();
-
-
-      //  System.out.println("Voici la liste des classes de projet : ");
-        // get classes
-      //  getClasses =spoonCouplingMetric.AffichagesClass();
-      //  getClasses = processor.AffichagesClass();
-        //System.out.println(getClasses);
 
         String classA = null;
         boolean classAExists = false;
@@ -89,19 +75,6 @@ public class SpoonProcessor {
         List<String> methodDeclarationB = spoonCouplingMetric.getMethodDeclarationClass(classB);
         List<String> methodInvocationB = spoonCouplingMetric.getListInvocationClass(classB);
 
-       /*
-        System.out.println("Les methodes de la classes A sont : ");
-        System.out.println(methodDeclarationA);
-
-        System.out.println("Les methodes de la classes B sont : ");
-        System.out.println(methodDeclarationB);
-
-        System.out.println("Les methodes invocation  de la classes A sont : ");
-        System.out.println(methodInvocationA);
-
-        System.out.println("Les methodes invocation de la classes B sont : ");
-        System.out.println(methodInvocationB);*/
-
 
         if (classAExists && classBExists) {
             List<String> listeMethodsA = spoonCouplingMetric.getListMethodDeclarationInvocation(methodDeclarationA, methodInvocationB);
@@ -110,43 +83,45 @@ public class SpoonProcessor {
 
             List<String> listeMethodstotalA = new ArrayList<>();
             List<String> listeMethodstotalB = new ArrayList<>();
-            System.out.println(listeMethodsA);
-            System.out.println(listeMethodsB);
+
 
             int nbMethodAll = 0;
 
             /** boucle pour la recuperation des methodes de declaration et d'invocation for all classes dans le programme */
-       /*     for (int i = 1; i < getClasses.size() - 1; i++) {
+            for (int i = 1; i < getClasses.size() - 1; i++) {
                 for (int j = i + 1; j < getClasses.size(); j++) {
                     String clsA = getClasses.get(i);
                     String clsB = getClasses.get(j);
 
 
-                    List<String> methodDeclarationAllA = processor.getMethodDeclarationClass(clsA);
-                    List<String> methodDeclarationAllB = processor.getMethodDeclarationClass(clsB);
-                    List<String> methodInvocationAllA = processor.getListInvocationClass(clsA);
-                    List<String> methodInvocationAllB = processor.getListInvocationClass(clsB);
+                    List<String> methodDeclarationAllA = spoonCouplingMetric.getMethodDeclarationClass(clsA);
+                    List<String> methodDeclarationAllB = spoonCouplingMetric.getMethodDeclarationClass(clsB);
+                    List<String> methodInvocationAllA = spoonCouplingMetric.getListInvocationClass(clsA);
+                    List<String> methodInvocationAllB = spoonCouplingMetric.getListInvocationClass(clsB);
+
 
                     /** recuperation des methodes en communs entre chaque pair de classes dans le programme */
-             /*       listeMethodstotalA= processor.getListMethodDeclarationInvocation(methodDeclarationAllA, methodInvocationAllB);
-                    listeMethodstotalB = processor.getListMethodDeclarationInvocation(methodDeclarationAllB, methodInvocationAllA);
+                    listeMethodstotalA= spoonCouplingMetric.getListMethodDeclarationInvocation(methodDeclarationAllA, methodInvocationAllB);
+                    listeMethodstotalB = spoonCouplingMetric.getListMethodDeclarationInvocation(methodDeclarationAllB, methodInvocationAllA);
 
                     /** clacul de nombre de methodes dans tous le programme */
-               /*     nbMethodAll = processor.calculAllMethods(listeMethodstotalA, listeMethodstotalB);
+                    nbMethodAll = processor.calculAllMethods(listeMethodstotalA, listeMethodstotalB);
                 }
             }
 
             /** cette methode permet de recuperer la liste des methodes enrelation entre la classe A et B pour realiser le graphe d'appel */
-          /*  processor.getMethodDeclarationInvocationBetweenClasses(classA, classB,listeMethodsA, listeMethodsB);
+            spoonCouplingMetric.getMethodDeclarationInvocationBetweenClasses(classA, classB,listeMethodsA, listeMethodsB);
 
 
-            int nbMethodAB = processor.getNbMethodIncludInAB(listeMethodsA, listeMethodsB);
+            int nbMethodAB = spoonCouplingMetric.getNbMethodIncludInAB(listeMethodsA, listeMethodsB);
+
+            System.out.println();
             System.out.println("Le nombre d'appels de méthodes qui sont en relation entre la Classe A et la Classe B : " + nbMethodAB);
             System.out.println("Le nombre total d'appels de méthodes dans le programme est : " + nbMethodAll);
 
-            float couplageAB = processor.Couplage(nbMethodAB, nbMethodAll);
+            float couplageAB = spoonCouplingMetric.calculateCouplage(nbMethodAB, nbMethodAll);
             System.out.println("La métrique de couplage entre deux classes " + classA + " et " + classB + " est de : " + couplageAB);
-        */ }
+         }
 
     }
 }

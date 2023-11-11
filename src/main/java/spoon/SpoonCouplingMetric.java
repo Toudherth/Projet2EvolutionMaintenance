@@ -1,5 +1,6 @@
 package spoon;
 
+import entity.Method;
 import org.eclipse.jdt.core.dom.MethodDeclaration;
 import spoon.reflect.CtModel;
 import spoon.reflect.code.CtInvocation;
@@ -78,17 +79,14 @@ public class SpoonCouplingMetric {
 
 	public static List<String> getMethodDeclarationClass( String className) {
 		List<String> methodsDeclaration = new ArrayList<>();
-
 		// Find the class by name
 		CtClass<?> ctClass = model.getElements(new TypeFilter<>(CtClass.class)).stream()
 				.filter(c -> c.getSimpleName().equals(className))
 				.findFirst()
 				.orElse(null);
-
 		if (ctClass != null) {
 			// Filter children to get methods
 			List<CtMethod<?>> methods = ctClass.filterChildren(new TypeFilter<>(CtMethod.class)).list();
-
 			// Add method names to the result list
 			for (CtMethod<?> ctMethod : methods) {
 				methodsDeclaration.add(ctMethod.getSimpleName());
@@ -101,17 +99,14 @@ public class SpoonCouplingMetric {
 
 	public static List<String> getListInvocationClass(String className) {
 		List<String> listeMethodeInvocationPerClass = new ArrayList<>();
-
 		// Trouver la classe par son nom
 		CtClass<?> ctClass = model.getElements(new TypeFilter<>(CtClass.class)).stream()
 				.filter(c -> c.getSimpleName().equals(className))
 				.findFirst()
 				.orElse(null);
-
 		if (ctClass != null) {
 			// Filtrer les enfants pour obtenir les méthodes
 			List<CtMethod<?>> methods = ctClass.filterChildren(new TypeFilter<>(CtMethod.class)).list();
-
 			// Itérer sur les méthodes pour trouver les invocations
 			for (CtMethod<?> ctMethod : methods) {
 				List<CtExecutableReference<?>> methodInvocations = ctMethod.getElements(new TypeFilter<>(CtExecutableReference.class));
@@ -124,26 +119,20 @@ public class SpoonCouplingMetric {
 				}
 			}
 		}
-
 		return listeMethodeInvocationPerClass;
 	}
-
 	private static String getMethodName(CtExecutableReference<?> invocation) {
 		// Retourner le nom de la méthode
 		return invocation.getSimpleName();
 	}
 
+
+
 	public static List<String> getListMethodDeclarationInvocation(List<String> methodClassA, List<String> methodClassB) {
 		List<String> listeMethodeDeclarationInvocation = new ArrayList<>();
-
 		for (String methodNameA : methodClassA) {
-			// Iterate over method names for class B
 			for (String methodNameB : methodClassB) {
-
-				// If the method names match
-				if (methodNameA.equals(methodNameB)) {
-					System.out.println(methodNameA+" "+methodNameB);
-
+				if (methodNameA.equals(methodNameB) && !listeMethodeDeclarationInvocation.contains(methodNameA)) {
 					listeMethodeDeclarationInvocation.add(methodNameA);
 				}
 			}
@@ -154,21 +143,35 @@ public class SpoonCouplingMetric {
 
 
 
-	private static List<String> getMethodDeclarations(CtClass<?> ctClass) {
-		List<String> methodDeclarations = new ArrayList<>();
-
-		// Filter children to get methods
-		List<CtMethod<?>> methods = ctClass.filterChildren(new TypeFilter<>(CtMethod.class)).list();
-
-		// Add method names to the result list
-		for (CtMethod<?> ctMethod : methods) {
-			methodDeclarations.add(ctMethod.getSimpleName());
-		}
-
-		return methodDeclarations;
+	public static List<Method> getMethodDeclarationInvocationBetweenClasses(String methodA, String methodB, List<String> a , List<String> b){
+		return  visitorsClass.getMethodDeclarationInvocationBetweenClasses(methodA, methodB,a,b);
 	}
 
 
+
+	public static float calculateCouplage(int countA, int countB) {
+		if (countB != 0) {
+			return (float) countA / countB;
+		} else {
+			// Handle division by zero case
+			return 0.0f;
+		}
+	}
+
+
+	public static int getNbMethodIncludInAB(List<String> a , List<String> b ){
+		int clsA= a.size();
+		int clsB= b.size();
+		int s= clsA+clsB;
+		return s;
+	}
+
+	private static CtType<?> findClassByName(String className) {
+		return model.getElements(new TypeFilter<>(CtType.class)).stream()
+				.filter(c -> c.getSimpleName().equals(className))
+				.findFirst()
+				.orElse(null);
+	}
 
 
 

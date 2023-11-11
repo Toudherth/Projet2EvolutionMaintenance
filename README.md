@@ -1,10 +1,11 @@
 # Projet2EvolutionMaintenance
-Projet sur la compréhention des programmes, clusturing et Spoon
+Projet sur l'analyseur Statique
+
 
 La vertion complete avec Spoon ce trouve dans la branch integration-spoon-changes
 
 
-# Le fonctionnement de la partie 1 
+# -------------------
 une fois on execute le porgramme on aura un champs de texte scanner pour ajouter le path de projet que vous voullez analyser, le path soit le chemin de projet sans le fichiers src. 
 le programme vous renvoie un menu pour choisir ce que vous voulez 1, 2... 
 
@@ -23,11 +24,13 @@ Le choix 2 vos renvoie l'ensemble des clusters de projets.
 Le choix 3  renvoie la listes des modules generer par l'algorithme d'identification, qui contient les clusters qui ont un couplage fort.
 
 # Choix 4 : Calculer la métrique de couplage entre deux classes A et B en utilisant Spoon.
-
+( meme  que le choix 1)
 
 # Choix 5 : Générer le regroupement hiérarchique des classes (avec Spoon).
+(meme  que le choix 2 )
 
 # Choix 6 : Générer l'algorithme d'identification des modules (avec Spoon).
+(meme que le choix 3)
 
 # Choix 0 : Quitter 
 

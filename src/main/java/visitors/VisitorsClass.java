@@ -10,7 +10,7 @@ import entity.Method;
 
 public class VisitorsClass extends ASTVisitor {
 
-    // VARIABLES :
+    // TODO: VARIABLES :
     private CompilationUnit cu;
     private List<TypeDeclaration> classDeclarations = new ArrayList();
     private List<MethodDeclaration> methodsDeclaration = new ArrayList<>();
@@ -25,7 +25,7 @@ public class VisitorsClass extends ASTVisitor {
 
 
 
-    // METHODES : ------------------------------------------------------------------------
+    // TODO: METHODES :
 
     /** recuperer toutes les classes de declaration de programme  */
     public List<TypeDeclaration> getClassDeclarations() {

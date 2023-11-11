@@ -8,20 +8,24 @@ import spoon.reflect.declaration.CtMethod;
 public class SpoonParser {
 	private String projectPath;
 
+
 	public SpoonParser(String projectPath) {
 		super();
 		this.projectPath = projectPath;
 	}
 
 	public CtModel getModel() {
+		System.out.println("je suis dans le launcher ");
 		Launcher launcher = new Launcher();
+		//System.out.println(launcher.getModel());
 		launcher.addInputResource(projectPath);
-		launcher.buildModel();
+		//launcher.buildModel();
+		System.out.println(launcher.buildModel());
 		return launcher.getModel();
 	}
 
 
-
+/*
 	public static void main(String[] args) {
 		// Create a Spoon launcher
 		Launcher launcher = new Launcher();
@@ -50,6 +54,6 @@ public class SpoonParser {
 		// You can save the modified code to a file if needed
 		//  launcher.createOutputWriter().createFileWriter("path/to/ModifiedMyClass.java").write(myClass.toString());
 
-	}
+	}*/
 
 	}

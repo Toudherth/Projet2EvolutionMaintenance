@@ -6,8 +6,8 @@ import exo1.Processor;
 import exo2.Clustering;
 import exo2.Identification;
 import parse.ParserAST;
-import spoon.SpoonCouplingGraph;
 import spoon.SpoonCouplingMetric;
+import spoon.SpoonHierarchicalClustering;
 import spoon.SpoonParser;
 import spoon.SpoonProcessor;
 
@@ -26,8 +26,8 @@ public class Main {
     private static Couplage couplageClass;
     private static SpoonParser spoonParser;
     private static SpoonCouplingMetric spoonCouplingMetric;
-    private static SpoonCouplingGraph spoonCouplingGraph;
     private static SpoonProcessor spoonProcessor;
+    private static SpoonHierarchicalClustering spoonHierarchicalClustering;
 
 
     private static List<String> classes = new ArrayList<>();
@@ -45,7 +45,7 @@ public class Main {
                 spoonParser= null;
                 spoonProcessor=null;
                 spoonCouplingMetric=null;
-                spoonCouplingGraph=null;
+                spoonHierarchicalClustering=null;
 
                 while (projectSourcePath == null) {
                     System.out.print("Enter l'URI de votre projet sans le package src : ");
@@ -58,8 +58,6 @@ public class Main {
                         parserAST = new ParserAST(projectSourcePath);
                         couplageClass= new Couplage(projectSourcePath);
                         spoonParser= new SpoonParser(projectSourcePath);
-                      //  spoonProcessor= new SpoonProcessor(projectSourcePath);
-                     //   spoonCouplingGraph= new SpoonCouplingGraph(projectSourcePath);
 
 
 
@@ -79,6 +77,7 @@ public class Main {
             System.out.println("2 - Générer le regroupement hiérarchique des clusters. ");
             System.out.println("3 - Générer l'algorithme d'identification des modules. ");
             System.out.println("4 - Calculer la métrique de couplage entre deux classes A et B en utilisant Spoon.");
+            System.out.println("5 - Générer le regroupement hiérarchique des classes (avec Spoon).");;
 
             System.out.println("0 - Quitter");
             choice = scanner.nextLine();
@@ -151,7 +150,6 @@ public class Main {
 
                 // TODO : **Spoon execution **
                 case "4": {
-
                     //TODO : Calculez une métrique avec Spoon de couplage entre deux classes A et B
                     System.out.println("Spoon ...  ");
                     System.out.println("\u001B[1m 4 - Calculer la métrique de couplage entre deux classes A et B en utilisant Spoon: \u001B[0m");
@@ -182,6 +180,21 @@ public class Main {
                             System.out.println("Votre choix ne figure pas dans noter proposition !!!! ");
                             break;
                     }
+
+                    break;
+                }
+
+                case "5": {
+                    System.out.println("Spoon ...  ");
+                    System.out.println("\u001B[1m 5- Générer le regroupement hiérarchique des classes (avec Spoon) : \u001B[0m");
+                    spoonParser = new SpoonParser(projectSourcePath);
+                    spoonHierarchicalClustering = new SpoonHierarchicalClustering(spoonParser.getModel());
+
+                    System.out.println("Voici la liste des classes de projet : ");
+                    getClasses = spoonHierarchicalClustering.AffichagesClass();
+                    System.out.println(getClasses);
+                    spoonHierarchicalClustering.hierarchicalClustering();
+                    System.out.println();
 
                     break;
                 }

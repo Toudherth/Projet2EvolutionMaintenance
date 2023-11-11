@@ -89,6 +89,7 @@ public class VisitorsClass extends ASTVisitor {
 
         String methodNameB= methodB.toString();
         String methodNameA= methodA.toString();
+        methodsHavingReferencesBetweenAB = new ArrayList<>();
 
         VisitorsClass visitorClass = new VisitorsClass();
         visitorClass.setCu(visitorClass.cu);
@@ -161,15 +162,17 @@ public class VisitorsClass extends ASTVisitor {
 
     @Override
     public boolean visit(MethodDeclaration node) {
+        methodsDeclaration.clear();
         if (node.isConstructor()) {
             return false;
         }
-        methodsDeclaration.add(node);
         return super.visit(node);
     }
 
+
     @Override
     public boolean visit(MethodInvocation node) {
+
         methodsInvocation.add(node);
         return super.visit(node);
     }

@@ -45,6 +45,8 @@ public class SpoonProcessor {
         spoonCouplingMetric = new SpoonCouplingMetric(spoonParser.getModel());
         System.out.println("Voici la liste des classes de projet : ");
         getClasses =spoonCouplingMetric.AffichagesClass();
+        System.out.println(getClasses);
+        System.out.println();
 
         String classA = null;
         boolean classAExists = false;
@@ -75,11 +77,16 @@ public class SpoonProcessor {
         List<String> methodDeclarationB = spoonCouplingMetric.getMethodDeclarationClass(classB);
         List<String> methodInvocationB = spoonCouplingMetric.getListInvocationClass(classB);
 
+        List<String> listeMethodsA= new ArrayList<>();
+        List<String> listeMethodsB= new ArrayList<>();
 
         if (classAExists && classBExists) {
-            List<String> listeMethodsA = spoonCouplingMetric.getListMethodDeclarationInvocation(methodDeclarationA, methodInvocationB);
+            listeMethodsA.clear();
+            listeMethodsB.clear();
 
-            List<String> listeMethodsB = spoonCouplingMetric.getListMethodDeclarationInvocation(methodDeclarationB, methodInvocationA);
+            listeMethodsA = spoonCouplingMetric.getListMethodDeclarationInvocation(methodDeclarationA, methodInvocationB);
+
+            listeMethodsB = spoonCouplingMetric.getListMethodDeclarationInvocation(methodDeclarationB, methodInvocationA);
 
             List<String> listeMethodstotalA = new ArrayList<>();
             List<String> listeMethodstotalB = new ArrayList<>();
@@ -92,6 +99,8 @@ public class SpoonProcessor {
                 for (int j = i + 1; j < getClasses.size(); j++) {
                     String clsA = getClasses.get(i);
                     String clsB = getClasses.get(j);
+                    listeMethodstotalA.clear();
+                    listeMethodstotalB.clear();
 
 
                     List<String> methodDeclarationAllA = spoonCouplingMetric.getMethodDeclarationClass(clsA);

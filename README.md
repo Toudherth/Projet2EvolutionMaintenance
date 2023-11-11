@@ -1,6 +1,8 @@
 # Projet2EvolutionMaintenance
 Projet sur la compréhention des programmes, clusturing et Spoon
 
+La vertion complete avec Spoon ce trouve dans la branch 
+
 # Le fonctionnement de la partie 1 
 une fois on execute le porgramme on aura un champs de texte scanner pour ajouter le path de projet que vous voullez analyser, le path soit le chemin de projet sans le fichiers src. 
 le programme vous renvoie un menu pour choisir ce que vous voulez 1, 2... 

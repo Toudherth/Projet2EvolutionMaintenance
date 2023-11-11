@@ -19,7 +19,15 @@ Le choix 2 vos renvoie l'ensemble des clusters de projets.
 # Choix 3 : Générer l'algorithme d'identification des modules.
 Le choix 3  renvoie la listes des modules generer par l'algorithme d'identification, qui contient les clusters qui ont un couplage fort.
 
-# Choix 4 : 
+# Choix 4 : Calculer la métrique de couplage entre deux classes A et B en utilisant Spoon.
+
+
+# Choix 5 : Générer le regroupement hiérarchique des classes (avec Spoon).
+
+# Choix 6 : Générer l'algorithme d'identification des modules (avec Spoon).
+
+# Choix 0 : Quitter 
+
 
 
 

@@ -189,7 +189,6 @@ public class SpoonHierarchicalClustering {
         if (ctType != null) {
             // Filtrer les enfants pour obtenir les méthodes
             List<CtExecutableReference<?>> methods = ctType.filterChildren(new TypeFilter<>(CtExecutableReference.class)).list();
-
             // Itérez sur les méthodes pour trouver les invocations
             for (CtExecutableReference<?> method : methods) {
                 CtTypeReference<?> declaringType = method.getDeclaringType();

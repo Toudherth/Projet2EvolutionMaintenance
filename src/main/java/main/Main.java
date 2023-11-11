@@ -6,10 +6,7 @@ import exo1.Processor;
 import exo2.Clustering;
 import exo2.Identification;
 import parse.ParserAST;
-import spoon.SpoonCouplingMetric;
-import spoon.SpoonHierarchicalClustering;
-import spoon.SpoonParser;
-import spoon.SpoonProcessor;
+import spoon.*;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -28,6 +25,7 @@ public class Main {
     private static SpoonCouplingMetric spoonCouplingMetric;
     private static SpoonProcessor spoonProcessor;
     private static SpoonHierarchicalClustering spoonHierarchicalClustering;
+    private static SpoonIdentification spoonIdentification;
 
 
     private static List<String> classes = new ArrayList<>();
@@ -46,6 +44,7 @@ public class Main {
                 spoonProcessor=null;
                 spoonCouplingMetric=null;
                 spoonHierarchicalClustering=null;
+                spoonIdentification=null;
 
                 while (projectSourcePath == null) {
                     System.out.print("Enter l'URI de votre projet sans le package src : ");
@@ -58,9 +57,6 @@ public class Main {
                         parserAST = new ParserAST(projectSourcePath);
                         couplageClass= new Couplage(projectSourcePath);
                         spoonParser= new SpoonParser(projectSourcePath);
-
-
-
                     } catch (Exception e) {
                         System.out.println("Erreur : le chemin du projet est incorrect. Veuillez réessayer.");
                         projectSourcePath = null; // Réinitialise le chemin pour réessayer.
@@ -78,6 +74,7 @@ public class Main {
             System.out.println("3 - Générer l'algorithme d'identification des modules. ");
             System.out.println("4 - Calculer la métrique de couplage entre deux classes A et B en utilisant Spoon.");
             System.out.println("5 - Générer le regroupement hiérarchique des classes (avec Spoon).");;
+            System.out.println("6 - Générer l'algorithme d'identification des modules (avec Spoon).");
 
             System.out.println("0 - Quitter");
             choice = scanner.nextLine();
@@ -126,9 +123,7 @@ public class Main {
 
                 case "3": {
                     System.out.println("\u001B[1m 3- Algorithme d'identification des modules : \u001B[0m");
-
                     // TODO : ce qu'il faut pour l'algorithme d'indentification
-
                     classes= clustering.AffichagesClass();
                     double[][] couplingMatrix = new double[classes.size()][classes.size()];
 
@@ -188,13 +183,45 @@ public class Main {
                     System.out.println("Spoon ...  ");
                     System.out.println("\u001B[1m 5- Générer le regroupement hiérarchique des classes (avec Spoon) : \u001B[0m");
                     spoonParser = new SpoonParser(projectSourcePath);
-                    spoonHierarchicalClustering = new SpoonHierarchicalClustering(spoonParser.getModel());
-
+                    spoonHierarchicalClustering= new SpoonHierarchicalClustering(spoonParser.getModel());
                     System.out.println("Voici la liste des classes de projet : ");
-                    getClasses = spoonHierarchicalClustering.AffichagesClass();
+                    classes = spoonHierarchicalClustering.AffichagesClass();
                     System.out.println(getClasses);
                     spoonHierarchicalClustering.hierarchicalClustering();
                     System.out.println();
+
+                    break;
+                }
+
+                case "6": {
+
+                    System.out.println("Spoon ...  ");
+                    System.out.println("\u001B[1m 6- Générer l'algorithme d'identification des classes (avec Spoon) : \u001B[0m");
+                    spoonParser = new SpoonParser(projectSourcePath);
+                    spoonHierarchicalClustering= new SpoonHierarchicalClustering(spoonParser.getModel());
+
+                    System.out.println("Voici la liste des classes de projet : ");
+                    classes = spoonHierarchicalClustering.AffichagesClass();
+                    double CP = 0.03; // sueil de couplage des modules
+
+                    spoonIdentification = new SpoonIdentification(spoonParser.getModel(), CP);
+                    // TODO : ce qu'il faut pour l'algorithme d'indentification
+                    double[][] couplingMatrix = new double[classes.size()][classes.size()];
+                   // Identification moduleIdentification = new Identification(CP);
+
+                    spoonIdentification.identifyModules(classes, couplingMatrix);
+
+                    List<Module> identifiedModules = spoonIdentification.getModules();
+                    System.out.println("la taille est : " +identifiedModules.size());
+                    for (Module module : identifiedModules) {
+                        System.out.println();
+                        System.out.println("Module: " + module.getName());
+                        System.out.println("Classes: " + module.getClasses());
+                    }
+                    System.out.println();
+
+
+
 
                     break;
                 }
